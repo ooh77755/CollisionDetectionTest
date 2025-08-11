@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerGrab : MonoBehaviour
 {
     public float grabRange = 3f;
-    public float grabRadius = 0.5f;
     public Transform holdPoint;
     public LayerMask grabbable;
     private Rigidbody rb;
@@ -31,7 +30,7 @@ public class PlayerGrab : MonoBehaviour
         Ray ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
         RaycastHit hit;
 
-        if(Physics.SphereCast(ray, grabRadius, out hit, grabRange, grabbable))
+        if(Physics.Raycast(ray, out hit, grabRange, grabbable))
         {
             Rigidbody rigidBody = hit.collider.GetComponent<Rigidbody>();
             if(rigidBody!=null)
