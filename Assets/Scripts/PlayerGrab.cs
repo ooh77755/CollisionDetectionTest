@@ -32,6 +32,7 @@ public class PlayerGrab : MonoBehaviour
 
         if(Physics.Raycast(ray, out hit, grabRange, grabbable))
         {
+            Debug.DrawLine(ray.origin, ray.origin + ray.direction * grabRange, Color.green, 10f);
             Rigidbody rigidBody = hit.collider.GetComponent<Rigidbody>();
             if(rigidBody!=null)
             {
@@ -39,6 +40,10 @@ public class PlayerGrab : MonoBehaviour
                 rb.useGravity = false;
                 rb.isKinematic = false;
             }
+        }
+        else
+        {
+            Debug.DrawLine(ray.origin, ray.origin + ray.direction * grabRange, Color.red, 10f);
         }
     }
 
