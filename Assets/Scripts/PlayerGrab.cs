@@ -33,13 +33,7 @@ public class PlayerGrab : MonoBehaviour
 
         if(Physics.SphereCast(ray, grabRadius, out hit, grabRange, grabbable))
         {
-            Rigidbody rigidBody = hit.collider.GetComponent<Rigidbody>();
-            if(rigidBody!=null)
-            {
-                rb = rigidBody;
-                rb.useGravity = false;
-                rb.isKinematic = false;
-            }
+            print(hit.collider.name);
         }
     }
 
