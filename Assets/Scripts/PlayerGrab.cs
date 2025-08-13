@@ -9,6 +9,7 @@ public class PlayerGrab : MonoBehaviour
     public Transform holdPoint;
     public LayerMask grabbable;
     private Rigidbody rb;
+    [SerializeField] SpringJoint joint;
 
     private void Update()
     {
@@ -33,12 +34,21 @@ public class PlayerGrab : MonoBehaviour
 
         if(Physics.SphereCast(ray, grabRadius, out hit, grabRange, grabbable))
         {
-            print(hit.collider.name);
+            Rigidbody targetRB = hit.collider.GetComponent<Rigidbody>();
+            if(targetRB!=null)
+            {
+                rb = targetRB;
+                rb.useGravity = false;
+                //joint = gameObject.AddComponent<SpringJoint>();
+                joint.connectedBody = rb;
+                joint.enableCollision = false;
+            }
         }
     }
 
     void Drop()
     {
+        Destroy(joint);
         rb.useGravity = true;
         rb = null;
     }
