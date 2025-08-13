@@ -11,7 +11,7 @@ public class PlayerGrab : MonoBehaviour
     private Rigidbody rb;
     private SpringJoint joint;
 
-    public float pullForce = 100f;
+    public float pullForce = 5f;
     public float maxDistance = 0.01f;
 
     private void Update()
@@ -55,8 +55,8 @@ public class PlayerGrab : MonoBehaviour
                 rb.constraints = RigidbodyConstraints.FreezeRotation;
                 joint = gameObject.AddComponent<SpringJoint>();
                 joint.connectedBody = rb;
-                joint.spring = 100f;
-                joint.damper = 20f;
+                joint.spring = 50f;
+                joint.damper = 25f;
                 joint.maxDistance = 0.5f;
                 joint.enableCollision = true;
             }
