@@ -52,6 +52,7 @@ public class PlayerGrab : MonoBehaviour
                 rb = targetRB;
                 rb.useGravity = false;
                 rb.isKinematic = false;
+                rb.constraints = RigidbodyConstraints.FreezeRotation;
                 joint = gameObject.AddComponent<SpringJoint>();
                 joint.connectedBody = rb;
                 joint.spring = 100f;
