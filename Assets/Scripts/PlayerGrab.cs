@@ -9,7 +9,10 @@ public class PlayerGrab : MonoBehaviour
     public Transform holdPoint;
     public LayerMask grabbable;
     private Rigidbody rb;
-    [SerializeField] SpringJoint joint;
+    private SpringJoint joint;
+
+    public float pullForce = 100f;
+    public float maxDistance = 0.01f;
 
     private void Update()
     {
@@ -20,10 +23,19 @@ public class PlayerGrab : MonoBehaviour
             else
                 Drop();
         }
+    }
 
-        if(rb != null)
+    private void FixedUpdate()
+    {
+        if(rb!=null)
         {
-            rb.MovePosition(holdPoint.position);
+            Vector3 direction = holdPoint.position - rb.position;
+            float distance = direction.magnitude;
+
+            if(distance> maxDistance)
+            {
+                rb.AddForce(direction.normalized * pullForce, ForceMode.Force);
+            }
         }
     }
 
@@ -39,17 +51,25 @@ public class PlayerGrab : MonoBehaviour
             {
                 rb = targetRB;
                 rb.useGravity = false;
-                //joint = gameObject.AddComponent<SpringJoint>();
+                rb.isKinematic = false;
+                joint = gameObject.AddComponent<SpringJoint>();
                 joint.connectedBody = rb;
-                joint.enableCollision = false;
+                joint.spring = 100f;
+                joint.damper = 20f;
+                joint.maxDistance = 0.5f;
+                joint.enableCollision = true;
             }
         }
     }
 
     void Drop()
     {
-        Destroy(joint);
-        rb.useGravity = true;
+        if(joint!=null)
+            Destroy(joint);
+
+        if(rb!=null)
+            rb.useGravity = true;
         rb = null;
+        joint = null;
     }
 }
