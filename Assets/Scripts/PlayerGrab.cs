@@ -7,22 +7,23 @@ public class PlayerGrab : MonoBehaviour
     public float grabRange = 3f;
     public Transform holdPoint;
     public LayerMask grabbable;
-    private Rigidbody rb;
+    private Transform grabbedObject;
 
     private void Update()
     {
         if(Input.GetMouseButtonDown(0))
         {
-            if(rb == null)
+            if(grabbedObject == null)
                 TryGrab();
             else
                 Drop();
         }
 
-        if(rb != null)
+        if(grabbedObject != null)
         {
-            rb.MovePosition(holdPoint.position);
+            grabbedObject.position = holdPoint.position;
         }
+
     }
 
     void TryGrab()
@@ -32,13 +33,15 @@ public class PlayerGrab : MonoBehaviour
 
         if(Physics.Raycast(ray, out hit, grabRange, grabbable))
         {
-            Debug.Log($"Grabbable object hit: {hit.collider.name}");
+            grabbedObject = hit.collider.transform;
+            grabbedObject.GetComponent<BoxCollider>().enabled = false;
         }
     }
 
     void Drop()
     {
-        rb.useGravity = true;
-        rb = null;
+        grabbedObject.GetComponent<BoxCollider>().enabled = true;
+        grabbedObject.position = new Vector3(transform.position.x, transform.position.y - 0.8f, transform.position.z);
+        grabbedObject = null;
     }
 }
