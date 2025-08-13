@@ -39,6 +39,7 @@ public class PlayerGrab : MonoBehaviour
                 rb = rigidBody;
                 rb.useGravity = false;
                 rb.isKinematic = false;
+                rb.constraints = RigidbodyConstraints.FreezeRotation;
             }
         }
     }
@@ -46,6 +47,8 @@ public class PlayerGrab : MonoBehaviour
     void Drop()
     {
         rb.useGravity = true;
+        //rb.isKinematic = true;
+        rb.constraints = RigidbodyConstraints.None;
         rb = null;
     }
 }
