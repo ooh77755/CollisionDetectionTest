@@ -5,26 +5,19 @@ using UnityEngine.SceneManagement;
 
 public class PressurePlate : MonoBehaviour
 {
-    int loadDelay = 3;
-    int currentSceneIndex;
-
-    private void Start()
-    {
-        currentSceneIndex = SceneManager.GetActiveScene().buildIndex;
-    }
+    float loadDelay = 3f;
 
     private void OnTriggerEnter(Collider other)
     {
         if(other.CompareTag("PP"))
         {
-            StartCoroutine(LoadNextLevel());
+            Invoke("LoadNextLevel", loadDelay);
         }
 
     }
 
-    IEnumerator LoadNextLevel()
+    void LoadNextLevel()
     {
-        yield return new WaitForSeconds(loadDelay);
-        SceneManager.LoadScene(currentSceneIndex+1);
+        SceneManager.LoadScene(1);
     }
 }
