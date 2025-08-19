@@ -9,11 +9,10 @@ public class PressurePlate : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("PP"))
+        if(other.CompareTag("CorrectItem"))
         {
             Invoke("LoadNextLevel", loadDelay);
         }
-
     }
 
     void LoadNextLevel()
